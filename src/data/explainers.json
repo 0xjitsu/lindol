@@ -1,0 +1,35 @@
+[
+  {
+    "id": "magnitude-vs-shaking",
+    "title": "Magnitude is not the shaking you felt",
+    "body": "Magnitude is the size of the earthquake, and each quake has one magnitude. Intensity is the shaking at each location, so it varies across the area around the epicentre. A quake's magnitude alone does not tell you how strongly it was felt where you are. Each whole-number step up in magnitude is a tenfold increase in the measured ground-motion amplitude.",
+    "sources": [
+      { "label": "USGS: Earthquake magnitude, energy release, and shaking intensity", "url": "https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity" }
+    ]
+  },
+  {
+    "id": "depth",
+    "title": "What depth means",
+    "body": "Depth is how far below the surface the quake started. USGS calls earthquakes between 0 and 70 km deep shallow, and those deeper than 70 km deep-focus. Depth is an estimate worked out from seismograph recordings, so treat it as approximate.",
+    "sources": [
+      { "label": "USGS: Determining the depth of an earthquake", "url": "https://www.usgs.gov/programs/earthquake-hazards/determining-depth-earthquake" }
+    ]
+  },
+  {
+    "id": "magnitude-types",
+    "title": "Magnitude types (mb, Mww, ML)",
+    "body": "The letters after a magnitude say how it was calculated. USGS treats Mww (moment magnitude) as its authoritative magnitude when it is computed. mb is authoritative only where no moment magnitude exists, typically in the 4.0 to 5.5 range. ML, the original Richter-Gutenberg local magnitude, is used for smaller events, typically below M4.0.",
+    "sources": [
+      { "label": "USGS: Magnitude types", "url": "https://www.usgs.gov/programs/earthquake-hazards/magnitude-types" }
+    ]
+  },
+  {
+    "id": "usgs-vs-phivolcs",
+    "title": "Why USGS and PHIVOLCS numbers can differ",
+    "body": "Magnitude can be calculated in several ways (see the types above), and which one is reported depends on the event and the data available. So two agencies can publish different figures for the same quake. PHIVOLCS is the official source for the Philippines; check its bulletins for official figures.",
+    "sources": [
+      { "label": "USGS: Magnitude types", "url": "https://www.usgs.gov/programs/earthquake-hazards/magnitude-types" },
+      { "label": "PHIVOLCS: earthquake information", "url": "https://earthquake.phivolcs.dost.gov.ph/" }
+    ]
+  }
+]

@@ -5,15 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lindol: quakes near me (PH)</title>
     <meta name="description" content="Recent earthquakes near any Philippine city, with magnitude, depth and time in PHT, a drop-cover-hold card, and a link to PHIVOLCS for official bulletins." />
+    <meta name="theme-color" content="#14213d" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://lindol-one.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lindol" />
+    <meta property="og:url" content="https://lindol-one.vercel.app/" />
+    <meta property="og:title" content="Lindol: may lindol ba malapit sa akin?" />
+    <meta property="og:description" content="Recent earthquakes near any Philippine city: magnitude, depth, distance and time in PHT. Not an official source; follow PHIVOLCS." />
+    <meta property="og:image" content="https://lindol-one.vercel.app/og/image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:video" content="https://lindol-one.vercel.app/og/preview.mp4" />
+    <meta property="og:video:secure_url" content="https://lindol-one.vercel.app/og/preview.mp4" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="1200" />
+    <meta property="og:video:height" content="630" />
+    <meta name="twitter:card" content="player" />
+    <meta name="twitter:title" content="Lindol: may lindol ba malapit sa akin?" />
+    <meta name="twitter:description" content="Recent earthquakes near any Philippine city. Not an official source; follow PHIVOLCS." />
+    <meta name="twitter:image" content="https://lindol-one.vercel.app/og/image.png" />
+    <meta name="twitter:player" content="https://lindol-one.vercel.app/og/player.html" />
+    <meta name="twitter:player:width" content="1200" />
+    <meta name="twitter:player:height" content="630" />
   </head>
   <body>
-    <main id="app">
-      <h1>Lindol</h1>
-      <p>Quakes near me. Being built: see the build brief in the repo issues.</p>
-    </main>
-    <footer>
-      <p>Earthquake data: <a href="https://earthquake.usgs.gov/">USGS Earthquake Hazards Program</a> (public domain). Official PH bulletins: <a href="https://www.phivolcs.dost.gov.ph/">PHIVOLCS</a>.</p>
-    </footer>
-    <script type="module" src="/src/main.ts"><\/script>
+    <a class="skip" href="#results" id="skip">Skip to results</a>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

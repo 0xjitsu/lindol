@@ -1,0 +1,38 @@
+{
+  "emergency": {
+    "text": "Emergency hotline (Philippines): 911",
+    "tel": "911",
+    "sources": [
+      { "label": "Executive Order No. 56, s. 2016 (Official Gazette)", "url": "https://www.officialgazette.gov.ph/2016/07/29/executive-order-no-56-s-2016/" }
+    ]
+  },
+  "sections": [
+    {
+      "id": "before",
+      "title": "Before shaking",
+      "steps": [
+        { "text": "Practice how to protect yourself during earthquakes with family and coworkers.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } },
+        { "text": "Secure heavy items like bookcases, refrigerators, water heaters, televisions and objects that hang on walls.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } }
+      ]
+    },
+    {
+      "id": "during",
+      "title": "During shaking: Drop, Cover and Hold On",
+      "steps": [
+        { "text": "DROP where you are onto hands and knees.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } },
+        { "text": "COVER your head and neck with one arm and hand.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } },
+        { "text": "HOLD ON until the shaking stops.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } }
+      ]
+    },
+    {
+      "id": "after",
+      "title": "After shaking",
+      "steps": [
+        { "text": "If you are in a damaged building, go outside and quickly move away from the building.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } },
+        { "text": "Expect aftershocks to follow the main shock.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } },
+        { "text": "If you are in an area that may experience tsunamis, go inland or to higher ground immediately after the shaking stops.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } },
+        { "text": "Avoid contact with floodwaters; they can contain chemicals, sewage and debris.", "source": { "label": "Ready.gov: Earthquakes", "url": "https://www.ready.gov/earthquakes" } }
+      ]
+    }
+  ]
+}

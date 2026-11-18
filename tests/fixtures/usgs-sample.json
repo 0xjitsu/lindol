@@ -1,0 +1,148 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "title": "FIXTURE: sample data for tests, not real"
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "id": "us7000fx01",
+   "properties": {
+    "mag": 5.2,
+    "magType": "mb",
+    "place": "21 km SW of Calatagan, Philippines",
+    "time": 1794967200000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx01",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     120.3,
+     13.4,
+     35.2
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "us7000fx02",
+   "properties": {
+    "mag": 3.1,
+    "magType": "ml",
+    "place": "8 km NNE of Tagaytay, Philippines",
+    "time": 1794884400000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx02",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     121.1,
+     14.2,
+     10
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "us7000fx03",
+   "properties": {
+    "mag": 2.6,
+    "magType": "ml",
+    "place": "43 km W of Nasugbu, Philippines",
+    "time": 1794546000000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx03",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     120,
+     14,
+     null
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "us7000fx04",
+   "properties": {
+    "mag": 4.3,
+    "magType": "mww",
+    "place": "12 km E of Baler, Philippines",
+    "time": 1794805200000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx04",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     121.5,
+     15.5,
+     22.5
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "us7000fx05",
+   "properties": {
+    "mag": 6,
+    "magType": "mww",
+    "place": "Far away: Surigao del Sur, Philippines",
+    "time": 1794942000000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx05",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     125,
+     10,
+     40
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "us7000fx06",
+   "properties": {
+    "mag": null,
+    "magType": null,
+    "place": "Unreviewed event, no magnitude",
+    "time": 1794960000000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx06",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     121,
+     14.5,
+     8
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "us7000fx07",
+   "properties": {
+    "mag": 4.9,
+    "magType": "mb",
+    "place": "Too old: 8 days ago",
+    "time": 1794258000000,
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000fx07",
+    "type": "earthquake"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     121.5,
+     14,
+     15
+    ]
+   }
+  }
+ ]
+}
