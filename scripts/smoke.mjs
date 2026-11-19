@@ -69,7 +69,7 @@ if (!existsSync('dist/index.html')) {
   }
 
   // ---------- no third-party hosts in shipped JS (no trackers, no tiles, no keys) ----------
-  const allowed = new Set(['earthquake.usgs.gov', 'www.usgs.gov', 'www.phivolcs.dost.gov.ph', 'earthquake.phivolcs.dost.gov.ph', 'tsunami.phivolcs.dost.gov.ph', 'www.ready.gov', 'www.officialgazette.gov.ph', 'github.com', 'lindol-one.vercel.app', 'www.w3.org']);
+  const allowed = new Set(['earthquake.usgs.gov', 'www.usgs.gov', 'www.phivolcs.dost.gov.ph', 'earthquake.phivolcs.dost.gov.ph', 'tsunami.phivolcs.dost.gov.ph', 'www.ready.gov', 'quezoncity.gov.ph', 'lawphil.net', 'github.com', 'lindol-one.vercel.app', 'www.w3.org']);
   for (const f of assetFiles.filter((x) => /\.(js|css)$/.test(x))) {
     const text = readFileSync(join(assetsDir, f), 'utf8');
     for (const m of text.matchAll(/https?:\/\/([a-z0-9.-]+)/gi)) if (!allowed.has(m[1].toLowerCase())) fail(`assets/${f}: unexpected host ${m[1]}`);

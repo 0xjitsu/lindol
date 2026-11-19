@@ -1,6 +1,6 @@
 # Lindol
 
-**"May lindol ba malapit sa akin?"** A free, public-good web tool that lists recent earthquakes near any Philippine city: magnitude (with type), depth, distance and compass direction from the city, and time in **PHT** (Asia/Manila, UTC+8). It also has a short **Drop, Cover and Hold On** card and a clear link to **PHIVOLCS** for official bulletins and tsunami advisories. English and Tagalog.
+**"May lindol ba malapit sa akin?"** A free, public-good web tool that lists recent earthquakes near any Philippine city: magnitude (with type), depth, distance and compass direction from the city, and time in **PHT** (Asia/Manila, UTC+8). It also has a short **Duck, Cover and Hold** card and a clear link to **PHIVOLCS** for official bulletins and tsunami advisories. English and Tagalog.
 
 **For:** households, schools, and newcomers to the Philippines.
 
