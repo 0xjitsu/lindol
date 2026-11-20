@@ -1,0 +1,116 @@
+{
+  "emergency": {
+    "text": "Emergency hotline (Philippines): 911",
+    "tel": "911",
+    "sources": [
+      {
+        "label": "Executive Order No. 56, s. 2018 (Lawphil)",
+        "url": "https://lawphil.net/executive/execord/eo2018/eo_56_2018.html"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "before",
+      "title": "Before shaking",
+      "steps": [
+        {
+          "text": "Secure heavy furniture and hanging objects.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "Prepare your family's Emergency Go Bag containing items needed for survival.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "Participate in office and community earthquake drills.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "during",
+      "title": "During shaking: Duck, Cover and Hold",
+      "steps": [
+        {
+          "text": "When inside a building: \"Duck, Cover, and Hold\". Duck under a strong table and hold on to it.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "Stay away from glass windows, shelves and heavy objects.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "After the shaking stops, exit the building, and go to the designated evacuation area.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "If outside, move to an open area, away from buildings, trees, electric posts and landslide prone areas.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "If you're in a moving vehicle, stop and exit the vehicle.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "after",
+      "title": "After shaking",
+      "steps": [
+        {
+          "text": "Stay alert for aftershocks.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "If in a coastal area and there is a threat of a tsunami, evacuate to higher ground immediately.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "Stay out of the building until advised that it is safe to return.",
+          "source": {
+            "label": "Quezon City: What to do during an earthquake",
+            "url": "https://quezoncity.gov.ph/qcitizen-guides/what-to-do-during-earthquake/"
+          }
+        },
+        {
+          "text": "Avoid contact with floodwaters; they can contain chemicals, sewage and debris.",
+          "source": {
+            "label": "Ready.gov: Earthquakes",
+            "url": "https://www.ready.gov/earthquakes"
+          }
+        }
+      ]
+    }
+  ]
+}
