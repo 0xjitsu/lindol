@@ -1,6 +1,6 @@
 # KaneCLI hackathon notes
 
-Copy for the submission form. The preview URL and the credentialed re-run belong in the PR description once they exist.
+Copy for the submission form. Both flows passed on the PR preview after the quiet-week fix (2026-11-26 07:43Z, exit 0).
 
 ## About your app
 

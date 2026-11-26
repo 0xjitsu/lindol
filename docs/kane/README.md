@@ -43,7 +43,9 @@ On exit 1 the feedback file tells the agent what failed and to fix the app, not 
 
 `npm run smoke` is unchanged: mocked USGS, mobile and desktop, no Kane credits.
 
-`docs/kane/dry-run.ndjson` is a `kane-cli testrun run --dry-run --agent` from Kane CLI 0.10.9 on a machine that is not signed in. The plan is `valid: true` for both flows. It does not open a browser and does not spend credits. `docs/kane/agent-feedback.md` in this commit is that same machine's `npm run verify` result: exit 2, did not start. The credentialed pass is [caught-empty-radius.md](caught-empty-radius.md). Replace `agent-feedback.md` after the preview run.
+`docs/kane/dry-run.ndjson` is a `kane-cli testrun run --dry-run --agent` from Kane CLI 0.10.9 on a machine that is not signed in. The plan is `valid: true` for both flows. It does not open a browser and does not spend credits.
+
+`docs/kane/agent-feedback.md` is the owner's preview run after the quiet-week fix: 2026-11-26 07:43Z, saved `kane-cli login`, exit 0, `overall_status` `passed`. The `_vercel_share` value is redacted. The evidence pack was not committed. The before-and-after story is [caught-empty-radius.md](caught-empty-radius.md).
 
 ## Flows
 

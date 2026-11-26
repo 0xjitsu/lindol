@@ -46,4 +46,18 @@ When the current search is empty, Lindol asks USGS for the next longer period at
 
 `npm run smoke` covers this with `tests/fixtures/usgs-older.json`: the 7-day response is empty, the 30-day response has one M4.4 inside 200 km, and clicking the button lists it without changing the radius.
 
-The owner's next Kane run should be `npm run verify` against the PR preview, not production. Commit that NDJSON here when it comes back.
+## Verified after the fix
+
+The same two committed flows passed against the PR preview after this change. Owner's machine, saved `kane-cli login`, Kane CLI 0.10.9, 2026-11-26 07:43Z. `npm run verify` exited 0. The suite completion event is `testrun_done` with `overall_status` `passed` and execution id `e01ea27f-91d7-45f9-9b89-df81f8229e7e` (`ts` `2026-11-26T07:43:27.130Z`). The feedback file says the flows passed and no code change is required. The evidence pack stayed on that machine.
+
+The preview URL's `_vercel_share` value is redacted in this repo. Stdout, with that value removed:
+
+```text
+> lindol@0.0.0 verify
+> node scripts/kane-verify.mjs https://lindol-git-cursor-kane-cli-verify-loop-4a08-xjitsu.vercel.app/?_vercel_share=<redacted>
+preflight <url> → 200
+kane-cli testrun run 2 flows --override-start-url <url> (saved kane-cli login)
+passed
+feedback: docs/kane/agent-feedback.md
+EXIT=0
+```

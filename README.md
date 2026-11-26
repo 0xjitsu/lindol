@@ -36,7 +36,9 @@ scripts/check-live.sh https://lindol-one.vercel.app   # verify a deployed URL
 
 [Kane CLI](https://www.testmuai.com/docs/kane-cli-introduction) runs the plain-English flows in `kane/flows/` in real Chrome against a deployed URL. `npm run verify -- <url>` prints pass or fail and writes `docs/kane/agent-feedback.md`. A Cursor stop hook and a Claude Code Stop hook send that file back to the agent when a flow fails. The fast mocked check is still `npm run smoke`.
 
-Sign in with `kane-cli login --oauth`, or set `LT_USERNAME` and `LT_ACCESS_KEY`. Details, the quiet-week bug Kane surfaced, and the demo script are in [docs/kane/README.md](docs/kane/README.md).
+Both flows passed on the PR preview after the quiet-week fix (2026-11-26 07:43Z, Kane CLI 0.10.9, saved `kane-cli login`, exit 0, `overall_status` `passed`). That run is [docs/kane/caught-empty-radius.md](docs/kane/caught-empty-radius.md).
+
+Sign in with `kane-cli login --oauth`, or set `LT_USERNAME` and `LT_ACCESS_KEY`. Details and the demo script are in [docs/kane/README.md](docs/kane/README.md).
 
 The link-preview assets in `public/og/` (`image.png`, `preview.mp4`) are rendered from fixture data by `npm run build && node scripts/make-og.mjs` (needs ffmpeg) and committed.
 
