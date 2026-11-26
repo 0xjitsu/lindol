@@ -18,6 +18,7 @@ The explainer text (`src/data/explainers.json`) and safety steps (`src/data/safe
 - The USGS catalogue is global. It can be incomplete for small quakes in the Philippines, and its magnitudes, depths and locations can differ from PHIVOLCS figures for the same event.
 - Magnitude is the size of the quake, not the shaking you felt. Lindol shows no intensity estimates, felt reports, damage predictions or aftershock odds.
 - USGS can take minutes or longer to publish an event. Data refreshes on demand and at most every 5 minutes while the tab is visible.
+- A quiet week is reported as empty. If a longer period at the same radius has a quake, the page names the closest one and offers that period. The radius stays put. A larger radius is offered only when the longer period is empty too.
 - Safety steps and explainers are in English only (quoted from the cited sources); the interface toggle translates the rest.
 
 ## Develop
@@ -30,6 +31,12 @@ npm run smoke     # static asset/data checks + headless Chromium at 375x812 and 
 scripts/check-live.sh https://lindol-one.vercel.app   # verify a deployed URL
 ```
 `npm run smoke` installs Chromium through Playwright if it is missing and fails (never skips) if the browser cannot run.
+
+## Verified with Kane CLI
+
+[Kane CLI](https://www.testmuai.com/docs/kane-cli-introduction) runs the plain-English flows in `kane/flows/` in real Chrome against a deployed URL. `npm run verify -- <url>` prints pass or fail and writes `docs/kane/agent-feedback.md`. A Cursor stop hook and a Claude Code Stop hook send that file back to the agent when a flow fails. The fast mocked check is still `npm run smoke`.
+
+Sign in with `kane-cli login --oauth`, or set `LT_USERNAME` and `LT_ACCESS_KEY`. Details, the quiet-week bug Kane surfaced, and the demo script are in [docs/kane/README.md](docs/kane/README.md).
 
 The link-preview assets in `public/og/` (`image.png`, `preview.mp4`) are rendered from fixture data by `npm run build && node scripts/make-og.mjs` (needs ffmpeg) and committed.
 

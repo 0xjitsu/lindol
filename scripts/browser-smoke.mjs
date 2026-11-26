@@ -9,6 +9,8 @@ import { serve } from './lib/static-server.mjs';
 
 const sample = readFileSync('tests/fixtures/usgs-sample.json', 'utf8');
 const emptyFx = readFileSync('tests/fixtures/usgs-empty.json', 'utf8');
+const olderFx = readFileSync('tests/fixtures/usgs-older.json', 'utf8');
+const OLDER_START = '2026-10-19T05:00:00.000Z';
 const FIXED_NOW = new Date('2026-11-18T05:00:00Z');
 const errors = [];
 let current = '';
@@ -49,7 +51,10 @@ async function scenario(name, viewport, fn) {
       state.usgs.push(u);
       if (state.mode === 'abort') return route.abort('internetdisconnected');
       if (state.mode === 'error') return route.fulfill({ status: 503, body: 'down' });
-      return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: state.mode === 'empty' ? emptyFx : sample });
+      const body = state.mode === 'empty' ? emptyFx
+        : state.mode === 'older' ? (u.searchParams.get('starttime') === OLDER_START ? olderFx : emptyFx)
+        : sample;
+      return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body });
     }
     state.bad.push(u.href);
     return route.abort();
@@ -96,6 +101,7 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 800 
     check(/Data fetched: 18 Nov 2026, 13:00 PHT/.test(await page.locator('#fetched').innerText()), 'Data fetched time missing');
     check(await page.locator('text=U.S. Geological Survey (USGS) Earthquake Hazards Program, public domain').isVisible(), 'USGS attribution not visible');
     check(await page.locator('.official a[href="https://www.phivolcs.dost.gov.ph/"]').isVisible(), 'PHIVOLCS banner link not visible');
+    check(/Verified with Kane CLI/.test(await page.locator('.foot').innerText()), 'Kane badge missing');
     check(/Not an official source/.test(await page.locator('.official').innerText()), 'official-source banner text missing');
     check(await page.locator('.official button, .official [aria-label*="ismiss"]').count() === 0, 'banner must not be dismissible');
     check(await page.locator('.plot svg[role="img"]').count() === 1, 'plot missing');
@@ -142,6 +148,32 @@ for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 800 
     check(await page.evaluate(() => window.__geoCalls) === 1, 'geolocation not called exactly once after tap');
     check(Math.abs(Number(st.usgs.at(-1).searchParams.get('latitude')) - 7.19) < 0.01, 'geolocation coords not used');
     check(await page.evaluate(() => !Object.values(localStorage).join(' ').includes('7.19')), 'location coordinates must not be stored');
+    // Typing a city and leaving the field must search that city, not the previous one.
+    await page.fill('#city-input', 'Davao City');
+    await page.locator('#city-input').blur();
+    await page.waitForFunction(() => /Davao City/.test(document.querySelector('#status').innerText));
+    check(Math.abs(Number(st.usgs.at(-1).searchParams.get('latitude')) - 7.0731) < 0.02, `typed Davao City was not searched: ${st.usgs.at(-1)}`);
+    check(!/\bof Manila\b/.test(await page.locator('#status').innerText()), `results still describe Manila: ${await page.locator('#status').innerText()}`);
+  });
+
+  await scenario('older', viewport, async (page, _c, st) => {
+    st.mode = 'older';
+    await page.goto(url);
+    await page.waitForSelector('#widen');
+    check((await page.locator('.calm').innerText()) === 'No earthquakes of M≥2.5 within 200 km of Manila in the last 7 days.', `older calm text: ${await page.locator('.calm').innerText()}`);
+    const before = await page.locator('#status').innerText();
+    check(/Closest in the last 30 days: M4\.4/.test(before), `nearest in the longer window missing: ${before}`);
+    check(/Look at the last 30 days/.test(before), `widen button missing: ${before}`);
+    check(await page.inputValue('#radius') === '200' && await page.inputValue('#period') === '168', 'controls changed before widen');
+    await page.click('#widen');
+    await page.waitForSelector('.quake');
+    check(await page.inputValue('#period') === '720', 'period did not become 30 days');
+    check(await page.inputValue('#radius') === '200', 'widening the period also changed the radius');
+    const after = await page.locator('#status').innerText();
+    check(/1 earthquake\(s\) of M≥2\.5 within 200 km of Manila in the last 30 days/.test(after), `30-day summary wrong: ${after}`);
+    check(/M4\.4/.test(await page.locator('.quake').first().innerText()), 'widened list missing the quake');
+    check(st.usgs.some((u) => u.searchParams.get('starttime') === OLDER_START), '30-day probe was not sent');
+    await noOverflow(page, 'older');
   });
 
   await scenario('empty', viewport, async (page, _c, st) => {

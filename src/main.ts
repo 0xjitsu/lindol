@@ -4,7 +4,7 @@ import explainers from './data/explainers.json';
 import safety from './data/safety.json';
 import { translate, type Lang } from './lib/i18n';
 import { formatPHT, relative } from './lib/time';
-import { buildUrl, filterQuakes, parseGeoJson, summarize, type Params, type Quake, type QuakeView } from './lib/quakes';
+import { buildUrl, closest, filterQuakes, parseGeoJson, summarize, type Params, type Quake, type QuakeView } from './lib/quakes';
 import {
   MAGS, PERIODS, RADII, cacheKey, loadCache, loadCity, loadControls, loadLang, saveCache, saveCity, saveControls, saveLang,
   type Controls,
@@ -24,6 +24,8 @@ const controls: Controls = loadControls();
 let city: City = CITIES.find((c) => c.name === loadCity()) ?? CITIES.find((c) => c.name === 'Manila') ?? CITIES[0];
 let status: Status = 'loading';
 let data: Data | null = null;
+/** A wider search that found something when the current controls did not. */
+let suggestion: { params: Params; nearest: QuakeView } | null = null;
 let reqId = 0;
 let controller: AbortController | null = null;
 
@@ -106,6 +108,7 @@ function shell(): void {
     <p>${esc(t('attribution'))}: <a href="https://earthquake.usgs.gov/" rel="noopener">earthquake.usgs.gov</a>.</p>
     <p>${esc(t('notWarning'))}</p>
     <p>${esc(t('license'))}. <a href="https://github.com/0xjitsu/lindol" rel="noopener">Source</a>${DONATE_URL ? ` · <a href="${DONATE_URL}" rel="noopener">${esc(t('donate'))}</a>` : ''}</p>
+    <p class="verified"><a class="badge" href="https://github.com/0xjitsu/lindol/blob/main/docs/kane/README.md" rel="noopener">${esc(t('verified'))}</a> ${esc(t('verifiedNote'))}</p>
   </div></footer>`;
   bind();
   renderResults();
@@ -135,8 +138,38 @@ function bind(): void {
     list.hidden = false; input.setAttribute('aria-expanded', 'true');
     list.querySelectorAll<HTMLButtonElement>('button').forEach((b) => b.addEventListener('click', () => choose(m[Number(b.dataset.i)])));
   };
+  const typedCity = (): City | null => {
+    const n = norm(input.value.trim());
+    if (!n) return null;
+    const exact = CITIES.find((c) => norm(c.name) === n);
+    if (exact) return exact;
+    const starts = CITIES.filter((c) => norm(c.name).startsWith(n));
+    return starts.length === 1 ? starts[0] : null;
+  };
+  // The box must name the city the results are for. Commit an exact name, or a
+  // unique prefix, when the field loses focus. Leave suggestion clicks alone.
+  const commitTypedCity = (refetch: boolean): void => {
+    const next = typedCity();
+    if (next) {
+      const changed = isCustom() || next.name !== city.name;
+      city = next;
+      saveCity(next.name);
+      input.value = next.name;
+      close();
+      if (changed || refetch) void load();
+      return;
+    }
+    input.value = city.name;
+    close();
+    if (refetch) void load();
+  };
   input.addEventListener('input', open);
   input.addEventListener('focus', () => input.select());
+  input.addEventListener('blur', (e) => {
+    const next = e.relatedTarget;
+    if (next instanceof Node && list.contains(next)) return;
+    commitTypedCity(false);
+  });
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') { e.preventDefault(); const m = matches(input.value); if (m[0]) choose(m[0]); }
     else if (e.key === 'Escape') close();
@@ -156,7 +189,7 @@ function bind(): void {
   sel('#radius', (v) => (controls.radiusKm = v));
   sel('#period', (v) => (controls.periodHours = v));
   sel('#minmag', (v) => (controls.minMag = v));
-  $('#refresh')!.addEventListener('click', () => void load());
+  $('#refresh')!.addEventListener('click', () => commitTypedCity(true));
   document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) =>
     b.addEventListener('click', () => { lang = b.dataset.lang === 'tl' ? 'tl' : 'en'; saveLang(lang); shell(); }));
   $('#locate')!.addEventListener('click', () => {
@@ -173,10 +206,34 @@ function bind(): void {
   });
 }
 
+/** Longer period first, so a quiet week stays "near". Then each larger radius. */
+function widerSteps(p: Params): Params[] {
+  const steps: Params[] = [];
+  for (const periodHours of PERIODS) if (periodHours > p.periodHours) steps.push({ ...p, periodHours });
+  for (const radiusKm of RADII) if (radiusKm > p.radiusKm) steps.push({ ...p, radiusKm });
+  return steps;
+}
+
+async function probeWider(p: Params, now: number, signal: AbortSignal): Promise<{ params: Params; nearest: QuakeView } | null> {
+  for (const step of widerSteps(p)) {
+    try {
+      const res = await fetch(buildUrl(step, now), { signal, headers: { Accept: 'application/json' } });
+      if (!res.ok) return null;
+      const nearest = closest(filterQuakes(parseGeoJson(await res.json()), step, now));
+      if (nearest) return { params: step, nearest };
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') throw err;
+      return null;
+    }
+  }
+  return null;
+}
+
 async function load(): Promise<void> {
   const id = ++reqId;
   controller?.abort();
   controller = new AbortController();
+  suggestion = null;
   status = 'loading';
   renderResults();
   const p = params();
@@ -186,16 +243,49 @@ async function load(): Promise<void> {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const quakes = parseGeoJson(await res.json());
     if (id !== reqId) return;
+    const found = filterQuakes(quakes, p, now);
+    const nextSuggestion = found.length ? null : await probeWider(p, now, controller.signal);
+    if (id !== reqId) return;
     data = { quakes, fetchedAt: now, stale: false };
+    suggestion = nextSuggestion;
     if (!isCustom()) saveCache({ key: cacheKey(p), fetchedAt: now, quakes }); // never persist a user's coordinates
     status = 'ok';
   } catch (err) {
     if (id !== reqId || (err instanceof DOMException && err.name === 'AbortError')) return;
     const cached = isCustom() ? null : loadCache(cacheKey(p));
     data = cached ? { quakes: cached.quakes, fetchedAt: cached.fetchedAt, stale: true } : null;
+    suggestion = null;
     status = navigator.onLine ? 'error' : 'offline';
   }
   renderResults();
+}
+
+function applySuggestion(): void {
+  if (!suggestion) return;
+  controls.radiusKm = suggestion.params.radiusKm;
+  controls.periodHours = suggestion.params.periodHours;
+  saveControls(controls);
+  const radius = $<HTMLSelectElement>('#radius');
+  const period = $<HTMLSelectElement>('#period');
+  if (radius) radius.value = String(controls.radiusKm);
+  if (period) period.value = String(controls.periodHours);
+  void load();
+}
+
+function widenOffer(p: Params): string {
+  if (!suggestion) return `<p class="hint">${t('emptyCalm')}</p>`;
+  const n = suggestion.nearest;
+  const timeChanged = suggestion.params.periodHours !== p.periodHours;
+  const vars = {
+    mag: magText(n.mag),
+    dist: Math.round(n.distanceKm),
+    dir: n.direction,
+    km: suggestion.params.radiusKm,
+    period: t('periodLabel' + periodKey(suggestion.params.periodHours)),
+  };
+  const sentence = timeChanged ? t('nearestPeriod', vars) : t('nearestRadius', vars);
+  const label = timeChanged ? t('widenPeriod', vars) : t('widenRadius', vars);
+  return `<p class="hint nearest">${esc(sentence)}</p><p><button type="button" class="btn primary" id="widen">${esc(label)}</button></p>`;
 }
 
 function plot(view: QuakeView[], p: Params, ref: number, s: ReturnType<typeof summarize>): string {
@@ -254,7 +344,7 @@ function renderResults(): void {
   const s = summarize(view);
   const vars = { mag: p.minMag.toFixed(1), km: p.radiusKm, city: city.name, period: t('periodLabel' + periodKey(p.periodHours)), n: s.count };
   if (!s.count) {
-    st.innerHTML = `${banner}<p class="msg calm">${esc(t('empty', vars))}</p><p class="hint">${t('emptyCalm')}</p>`;
+    st.innerHTML = `${banner}<p class="msg calm">${esc(t('empty', vars))}</p>${widenOffer(p)}`;
   } else {
     const sv = (q: QuakeView) => ({ mag: magText(q.mag), dist: Math.round(q.distanceKm), dir: q.direction });
     st.innerHTML = `${banner}<p class="msg summary">${esc(t('summary', vars))}</p>
@@ -263,6 +353,7 @@ function renderResults(): void {
     list.innerHTML = view.map((q) => card(q, [q === s.strongest ? t('strongestLbl') : '', q === s.closest ? t('closestLbl') : ''].filter(Boolean))).join('');
   }
   $('#retry')?.addEventListener('click', () => void load());
+  $('#widen')?.addEventListener('click', () => applySuggestion());
 }
 
 shell();

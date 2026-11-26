@@ -1,0 +1,2 @@
+{"type":"stream_start","cli_version":"0.10.9","surface":"testrun","pid":4854,"v":1,"ts":"2026-11-26T07:33:41.596Z"}
+{"type":"testrun_plan","members":[{"path":"/workspace/kane/flows/city_and_language_test.md","tags":["smoke","lindol"]},{"path":"/workspace/kane/flows/manila_quiet_week_test.md","tags":["smoke","lindol"]}],"valid":true,"parallel":1,"v":1,"ts":"2026-11-26T07:33:41.602Z"}
