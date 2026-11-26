@@ -1,0 +1,19 @@
+{
+  "type": "FeatureCollection",
+  "metadata": { "title": "FIXTURE: one quake inside 30 days and 200 km, outside the last 7 days" },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "us7000older1",
+      "properties": {
+        "mag": 4.4,
+        "magType": "mb",
+        "place": "1 km SSE of Malaruhatan, Philippines",
+        "time": 1793836800000,
+        "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000older1",
+        "type": "earthquake"
+      },
+      "geometry": { "type": "Point", "coordinates": [120.98, 14.0, 35] }
+    }
+  ]
+}

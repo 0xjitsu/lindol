@@ -28,6 +28,7 @@ input,select { width:100%; min-height:44px; font:inherit; padding:.4rem .6rem; b
 #city-list button { display:flex; justify-content:space-between; gap:.5rem; width:100%; min-height:44px; text-align:left; background:#fff; border:0; border-bottom:1px solid #eee; padding:.4rem .6rem; font:inherit; cursor:pointer; color:var(--ink); }
 #city-list button:hover,#city-list button:focus { background:#e8f0fb; } .reg { color:var(--muted); font-size:.875rem; } #city-list .none { padding:.6rem; }
 .msg { margin:.5rem 0; } .msg.warn { background:var(--warn); color:var(--warnink); border:1px solid #e0b100; border-radius:8px; padding:.5rem .75rem; }
+.nearest { margin-top:.35rem; }
 .msg.calm { font-size:1.05rem; } .summary { font-weight:600; }
 .highlights { margin:0 0 .5rem; padding-left:1.25rem; }
 .quake-list { list-style:none; padding:0; margin:0; display:grid; gap:.75rem; }
@@ -47,3 +48,4 @@ input,select { width:100%; min-height:44px; font:inherit; padding:.4rem .6rem; b
 .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .safety ul { padding-left:1.25rem; margin:.25rem 0; } .src { color:var(--muted); font-size:.875rem; } .emerg { font-size:1.1rem; }
 .foot { background:var(--navy); color:#fff; padding:1rem 0; margin-top:2rem; font-size:.9rem; } .foot a { color:#fff; }
+.badge { display:inline-block; border:1px solid #fff; border-radius:999px; padding:.05rem .55rem; font-weight:700; text-decoration:none; margin-right:.35rem; }
